@@ -1,0 +1,4 @@
+springdoc:
+  swagger-ui:
+    path: /doc
+    disable-swagger-default-url: true
