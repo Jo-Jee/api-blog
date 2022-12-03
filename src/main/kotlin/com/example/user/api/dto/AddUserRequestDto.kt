@@ -2,8 +2,7 @@ package com.example.user.api.dto
 
 import com.example.user.api.entity.UserEntity
 
-data class UserDto(
-    val id: Long?,
+data class AddUserRequestDto(
     val email: String,
     val password: String
 ) {

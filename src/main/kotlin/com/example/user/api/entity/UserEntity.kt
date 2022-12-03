@@ -1,6 +1,7 @@
 package com.example.user.api.entity
 
-import com.example.user.api.dto.UserDto
+import com.example.user.api.dto.AddUserRequestDto
+import com.example.user.api.dto.UserResponseDto
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -14,8 +15,8 @@ class UserEntity(
     val email: String,
     val password: String
 ) {
-    fun toDto(): UserDto {
-        return UserDto(
+    fun toDto(): UserResponseDto {
+        return UserResponseDto(
             id = id,
             email = email,
             password = password
