@@ -21,4 +21,8 @@ class UserService(
     fun newUser(user: AddUserRequestDto): UserResponseDto {
         return userRepository.save(user.toEntity()).toDto()
     }
+
+    fun findUserByEmail(email: String): UserResponseDto {
+        return userRepository.findByEmail(email)?.toDto() ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 email입니다.")
+    }
 }
