@@ -21,7 +21,7 @@ class UserController (
     }
 
     @PostMapping
-    fun newUser(@RequestBody newUser: AddUserRequestDto): UserResponseDto {
-        return userService.newUser(newUser)
+    fun addUser(@RequestBody newUser: AddUserRequestDto): UserResponseDto {
+        return userService.addUser(newUser)
     }
 }

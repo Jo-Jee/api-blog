@@ -2,14 +2,17 @@ package com.example.user.api.service
 
 import com.example.user.api.dto.AddUserRequestDto
 import com.example.user.api.dto.UserResponseDto
+import com.example.user.api.entity.User
 import com.example.user.api.repository.UserRepository
 import org.springframework.http.HttpStatus
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
 class UserService(
-    val userRepository: UserRepository
+    val userRepository: UserRepository,
+    val passwordEncoder: PasswordEncoder
 ) {
     fun findUserById(id: Long): UserResponseDto {
         return userRepository
@@ -18,8 +21,12 @@ class UserService(
             .toDto();
     }
 
-    fun newUser(user: AddUserRequestDto): UserResponseDto {
-        return userRepository.save(user.toEntity()).toDto()
+    fun addUser(newUser: AddUserRequestDto): UserResponseDto {
+        val user = User(
+            email = newUser.email,
+            encodedPassword = passwordEncoder.encode(newUser.password)
+        )
+        return userRepository.save(user).toDto()
     }
 
     fun findUserByEmail(email: String): UserResponseDto {

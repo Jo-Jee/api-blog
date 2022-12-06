@@ -7,7 +7,7 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@Component
+//@Component
 class JwtFilter(
     val jwtUtil: JwtUtil
 ): OncePerRequestFilter() {

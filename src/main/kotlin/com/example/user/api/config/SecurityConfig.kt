@@ -9,15 +9,17 @@ import org.springframework.security.web.SecurityFilterChain
 
 @EnableWebSecurity
 class SecurityConfig (
-    val userService: UserService
 ) {
     @Bean
     fun configure(http: HttpSecurity): SecurityFilterChain {
         http.csrf().disable()
+        http.headers().frameOptions().disable()
 
         http.authorizeRequests()
             .antMatchers(
-                "/api/v1/users/**"
+                "/api/v1/users/**",
+                "/h2-console/**",
+                "/**"
             ).permitAll()
             .anyRequest().authenticated()
 
