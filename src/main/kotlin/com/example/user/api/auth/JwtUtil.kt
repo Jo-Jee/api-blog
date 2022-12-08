@@ -1,5 +1,6 @@
 package com.example.user.api.auth
 
+import com.example.user.api.dto.LoginResponseDto
 import com.example.user.api.service.UserService
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -9,23 +10,34 @@ import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.*
 
-//@Component
+@Component
 class JwtUtil(
     val userService: UserService
 ) {
     val expTime: Long = 1000L * 60 * 3
-    val secretKey: Key = Keys.hmacShaKeyFor("testJWTsecretkey".toByteArray())
+    val secretKey: Key = Keys.hmacShaKeyFor("CNFjvDbu42BaFPmpDgjw7yFzg0yqms8l".toByteArray())
     val signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm.HS256
 
-    fun createToken(): String {
+    fun createToken(): LoginResponseDto {
         val claims: Claims = Jwts.claims()
         claims["uid"] = "test"
 
-        return Jwts.builder()
+        val accessToken = Jwts.builder()
             .setClaims(claims)
             .setExpiration(Date(System.currentTimeMillis() + expTime))
             .signWith(secretKey, signatureAlgorithm)
             .compact()
+
+        val refreshToken = Jwts.builder()
+            .setClaims(claims)
+            .setExpiration(Date(System.currentTimeMillis() + expTime))
+            .signWith(secretKey, signatureAlgorithm)
+            .compact()
+
+        return LoginResponseDto(
+            accessToken = accessToken,
+            refreshToken = refreshToken
+        )
     }
 
     fun validate(token: String): Boolean {

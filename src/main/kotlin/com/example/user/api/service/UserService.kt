@@ -29,7 +29,7 @@ class UserService(
         return userRepository.save(user).toDto()
     }
 
-    fun findUserByEmail(email: String): UserResponseDto {
-        return userRepository.findByEmail(email)?.toDto() ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 email입니다.")
+    fun findUserByEmail(email: String): User {
+        return userRepository.findByEmail(email) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 email입니다.")
     }
 }
