@@ -4,9 +4,9 @@ import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
 data class RegisterRequestDto(
-    @field:NotBlank
-    @field:Email
+    @field:NotBlank(message = "이메일이 비어있습니다.")
+    @field:Email(message = "이메일 형식이 유효하지 않습니다.")
     val email: String,
-    @field:NotBlank
+    @field:NotBlank(message = "비밀번호가 비어있습니다.")
     val password: String
 )

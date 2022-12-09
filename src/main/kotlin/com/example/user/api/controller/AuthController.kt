@@ -5,8 +5,6 @@ import com.example.user.api.dto.LoginRequestDto
 import com.example.user.api.dto.LoginResponseDto
 import com.example.user.api.dto.RegisterResponseDto
 import com.example.user.api.service.AuthService
-import org.springframework.validation.BindingResult
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,7 +13,6 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@Validated
 class AuthController(
     val authService: AuthService
 ) {

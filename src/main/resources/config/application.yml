@@ -1,0 +1,6 @@
+server:
+  error:
+    include-exception: false
+    include-stacktrace: never
+    include-binding-errors: never
+    include-message: always
