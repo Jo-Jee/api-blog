@@ -21,9 +21,7 @@ class User(
     fun toDto(): UserResponseDto {
         return UserResponseDto(
             id = id,
-            email = email,
-            createdAt = createdAt,
-            updatedAt = updatedAt
+            email = email
         )
     }
 
