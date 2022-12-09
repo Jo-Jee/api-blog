@@ -1,6 +1,6 @@
 package com.example.user.api.controller
 
-import com.example.user.api.dto.UserResponseDto
+import com.example.user.api.dto.RegisterResponseDto
 import com.example.user.api.service.UserService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,7 +13,7 @@ class UserController (
     val userService: UserService
 ) {
     @GetMapping("/{id}")
-    fun getUser(@PathVariable id: Long): UserResponseDto {
+    fun getUser(@PathVariable id: Long): RegisterResponseDto {
         return userService.findUserById(id).toDto()
     }
 }

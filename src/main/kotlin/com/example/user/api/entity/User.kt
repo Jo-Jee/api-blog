@@ -1,6 +1,6 @@
 package com.example.user.api.entity
 
-import com.example.user.api.dto.UserResponseDto
+import com.example.user.api.dto.RegisterResponseDto
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.Column
@@ -18,8 +18,8 @@ class User(
     val email: String,
     val encodedPassword: String
 ): Timestamped(), UserDetails {
-    fun toDto(): UserResponseDto {
-        return UserResponseDto(
+    fun toDto(): RegisterResponseDto {
+        return RegisterResponseDto(
             id = id,
             email = email
         )

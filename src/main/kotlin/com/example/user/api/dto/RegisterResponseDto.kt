@@ -1,8 +1,6 @@
 package com.example.user.api.dto
 
-import java.time.LocalDateTime
-
-data class UserResponseDto(
+data class RegisterResponseDto(
     val id: Long?,
     val email: String
 )
