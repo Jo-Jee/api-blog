@@ -1,8 +1,6 @@
 package com.example.user.api.dto
 
-import com.example.user.api.entity.User
-
-data class AddUserRequestDto(
+data class RegisterRequestDto(
     val email: String,
     val password: String
 )

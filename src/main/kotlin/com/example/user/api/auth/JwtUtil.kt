@@ -1,12 +1,17 @@
 package com.example.user.api.auth
 
 import com.example.user.api.dto.LoginResponseDto
+import com.example.user.api.entity.User
 import com.example.user.api.service.UserService
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import org.springframework.http.HttpStatus
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
+import org.springframework.web.server.ResponseStatusException
 import java.security.Key
 import java.util.*
 
@@ -14,13 +19,13 @@ import java.util.*
 class JwtUtil(
     val userService: UserService
 ) {
-    val expTime: Long = 1000L * 60 * 3
+    val expTime: Long = 1000L * 60 * 60 * 24
     val secretKey: Key = Keys.hmacShaKeyFor("CNFjvDbu42BaFPmpDgjw7yFzg0yqms8l".toByteArray())
     val signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm.HS256
 
-    fun createToken(): LoginResponseDto {
+    fun createToken(user: User): LoginResponseDto {
         val claims: Claims = Jwts.claims()
-        claims["uid"] = "test"
+        claims["uid"] = user.id
 
         val accessToken = Jwts.builder()
             .setClaims(claims)
@@ -47,7 +52,17 @@ class JwtUtil(
     }
 
     fun parseUid(token: String): Long {
-        return getClaims(token)["uid"] as Long
+        val uid = getClaims(token)["uid"]
+
+        return if (uid is Number)
+            uid.toLong()
+        else throw ResponseStatusException(HttpStatus.BAD_REQUEST)
+    }
+
+    fun getAuthentication(uid: Long): Authentication {
+        val user = userService.findUserById(uid)
+
+        return UsernamePasswordAuthenticationToken(user, null, user.authorities)
     }
 
     private fun getClaims(token: String): Claims {

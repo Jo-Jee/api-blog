@@ -17,7 +17,7 @@ class User(
     @Column(unique = true, nullable = false)
     val email: String,
     val encodedPassword: String
-): Timestamped() {
+): Timestamped(), UserDetails {
     fun toDto(): UserResponseDto {
         return UserResponseDto(
             id = id,
@@ -26,4 +26,12 @@ class User(
             updatedAt = updatedAt
         )
     }
+
+    override fun getPassword(): String = encodedPassword
+    override fun getUsername(): String = email
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? = null
+    override fun isAccountNonExpired(): Boolean = true
+    override fun isAccountNonLocked(): Boolean = true
+    override fun isCredentialsNonExpired(): Boolean = true
+    override fun isEnabled(): Boolean = true
 }
