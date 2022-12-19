@@ -1,6 +1,6 @@
 package com.example.user.api.dto
 
-data class RegisterResponseDto(
+data class UserResponseDto(
     val id: Long?,
     val email: String
 )

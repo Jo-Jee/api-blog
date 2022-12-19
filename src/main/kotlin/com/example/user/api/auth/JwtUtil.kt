@@ -60,7 +60,7 @@ class JwtUtil(
     }
 
     fun getAuthentication(uid: Long): Authentication {
-        val user = userService.findUserById(uid)
+        val user = userService.findById(uid)
 
         return UsernamePasswordAuthenticationToken(user, null, user.authorities)
     }

@@ -3,7 +3,7 @@ package com.example.user.api.controller
 import com.example.user.api.dto.RegisterRequestDto
 import com.example.user.api.dto.LoginRequestDto
 import com.example.user.api.dto.LoginResponseDto
-import com.example.user.api.dto.RegisterResponseDto
+import com.example.user.api.dto.UserResponseDto
 import com.example.user.api.service.AuthService
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PostMapping
@@ -29,7 +29,7 @@ class AuthController(
     @PostMapping("/register")
     fun register(
         @Valid @RequestBody newUser: RegisterRequestDto
-    ): RegisterResponseDto {
+    ): UserResponseDto {
         return authService.register(newUser).toDto()
     }
 }

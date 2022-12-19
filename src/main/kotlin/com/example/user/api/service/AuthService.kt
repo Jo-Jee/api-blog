@@ -19,7 +19,7 @@ class AuthService(
     fun login(
         loginRequestDto: LoginRequestDto
     ): LoginResponseDto {
-        val user = userService.findUserByEmail(loginRequestDto.email)
+        val user = userService.findByEmail(loginRequestDto.email)
 
         if (!passwordEncoder.matches(loginRequestDto.password, user.encodedPassword))
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 틀렸습니다.")
@@ -28,6 +28,6 @@ class AuthService(
     }
 
     fun register(newUser: RegisterRequestDto): User {
-        return userService.addUser(newUser.email, passwordEncoder.encode(newUser.password))
+        return userService.add(newUser.email, passwordEncoder.encode(newUser.password))
     }
 }
