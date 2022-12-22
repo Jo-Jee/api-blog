@@ -1,6 +1,5 @@
 package kr.co.jojee.blog.api.dto
 
-data class TopicResponseDto(
-    val id: Long?,
+data class TopicRequest(
     val name: String
 )

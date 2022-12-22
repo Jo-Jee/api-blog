@@ -1,9 +1,9 @@
 package kr.co.jojee.blog.api.service
 
 import kr.co.jojee.blog.api.auth.JwtUtil
-import kr.co.jojee.blog.api.dto.RegisterRequestDto
-import kr.co.jojee.blog.api.dto.LoginRequestDto
-import kr.co.jojee.blog.api.dto.LoginResponseDto
+import kr.co.jojee.blog.api.dto.RegisterRequest
+import kr.co.jojee.blog.api.dto.LoginRequest
+import kr.co.jojee.blog.api.dto.LoginResponse
 import kr.co.jojee.blog.api.entity.User
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -17,17 +17,17 @@ class AuthService(
     val userService: UserService
 ) {
     fun login(
-        loginRequestDto: LoginRequestDto
-    ): LoginResponseDto {
-        val user = userService.findByEmail(loginRequestDto.email)
+        loginRequest: LoginRequest
+    ): LoginResponse {
+        val user = userService.findByEmail(loginRequest.email)
 
-        if (!passwordEncoder.matches(loginRequestDto.password, user.encodedPassword))
+        if (!passwordEncoder.matches(loginRequest.password, user.encodedPassword))
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 틀렸습니다.")
 
         return jwtUtil.createToken(user)
     }
 
-    fun register(newUser: RegisterRequestDto): User {
+    fun register(newUser: RegisterRequest): User {
         return userService.add(newUser.email, passwordEncoder.encode(newUser.password))
     }
 }

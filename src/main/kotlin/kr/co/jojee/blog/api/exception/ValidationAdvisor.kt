@@ -1,6 +1,6 @@
 package kr.co.jojee.blog.api.exception
 
-import kr.co.jojee.blog.api.dto.ErrorResponseDto
+import kr.co.jojee.blog.api.dto.ErrorResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,7 +18,7 @@ class ValidationAdvisor: ResponseEntityExceptionHandler() {
         status: HttpStatus,
         request: WebRequest
     ): ResponseEntity<Any> {
-        return ResponseEntity.badRequest().body(ErrorResponseDto(message = ex.allErrors[0].defaultMessage))
+        return ResponseEntity.badRequest().body(ErrorResponse(message = ex.allErrors[0].defaultMessage))
     }
 
     override fun handleHttpMessageNotReadable(
@@ -27,6 +27,6 @@ class ValidationAdvisor: ResponseEntityExceptionHandler() {
         status: HttpStatus,
         request: WebRequest
     ): ResponseEntity<Any> {
-        return ResponseEntity.badRequest().body(ErrorResponseDto(message = "누락된 요청항목이 있습니다."))
+        return ResponseEntity.badRequest().body(ErrorResponse(message = "누락된 요청항목이 있습니다."))
     }
 }

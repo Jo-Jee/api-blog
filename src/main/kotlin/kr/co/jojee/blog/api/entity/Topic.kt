@@ -1,6 +1,6 @@
 package kr.co.jojee.blog.api.entity
 
-import kr.co.jojee.blog.api.dto.TopicResponseDto
+import kr.co.jojee.blog.api.dto.TopicResponse
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -15,8 +15,8 @@ class Topic(
     @Column(nullable = false, unique = true)
     val name: String
 ) {
-    fun toDto(): TopicResponseDto {
-        return TopicResponseDto(
+    fun toDto(): TopicResponse {
+        return TopicResponse(
             id = id,
             name = name
         )

@@ -1,6 +1,6 @@
 package kr.co.jojee.blog.api.controller
 
-import kr.co.jojee.blog.api.dto.UserResponseDto
+import kr.co.jojee.blog.api.dto.UserResponse
 import kr.co.jojee.blog.api.service.UserService
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -22,12 +22,12 @@ class UserController (
     val userService: UserService
 ) {
     @GetMapping("/{id}")
-    fun getUserById(@PathVariable id: Long): UserResponseDto {
+    fun getUserById(@PathVariable id: Long): UserResponse {
         return userService.findById(id).toDto()
     }
 
     @GetMapping("/")
-    fun getAllUsers(pageable: Pageable): Page<UserResponseDto> {
+    fun getAllUsers(pageable: Pageable): Page<UserResponse> {
         return userService.findAll(pageable).map { it.toDto()  }
     }
 }

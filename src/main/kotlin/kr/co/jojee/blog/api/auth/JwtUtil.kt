@@ -1,6 +1,6 @@
 package kr.co.jojee.blog.api.auth
 
-import kr.co.jojee.blog.api.dto.LoginResponseDto
+import kr.co.jojee.blog.api.dto.LoginResponse
 import kr.co.jojee.blog.api.entity.User
 import kr.co.jojee.blog.api.service.UserService
 import io.jsonwebtoken.Claims
@@ -23,7 +23,7 @@ class JwtUtil(
     val secretKey: Key = Keys.hmacShaKeyFor("CNFjvDbu42BaFPmpDgjw7yFzg0yqms8l".toByteArray())
     val signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm.HS256
 
-    fun createToken(user: User): LoginResponseDto {
+    fun createToken(user: User): LoginResponse {
         val claims: Claims = Jwts.claims()
         claims["uid"] = user.id
 
@@ -39,7 +39,7 @@ class JwtUtil(
             .signWith(secretKey, signatureAlgorithm)
             .compact()
 
-        return LoginResponseDto(
+        return LoginResponse(
             accessToken = accessToken,
             refreshToken = refreshToken
         )

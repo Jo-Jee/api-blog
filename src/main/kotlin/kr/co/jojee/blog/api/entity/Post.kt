@@ -1,7 +1,6 @@
 package kr.co.jojee.blog.api.entity
 
-import kr.co.jojee.blog.api.dto.PostResponseDto
-import java.util.TreeSet
+import kr.co.jojee.blog.api.dto.PostResponse
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -28,8 +27,8 @@ class Post(
     val tags: MutableSet<PostTag> = HashSet()
 
 ): Timestamped() {
-    fun toDto(): PostResponseDto {
-        return PostResponseDto(
+    fun toDto(): PostResponse {
+        return PostResponse(
             id = id,
             title = title
         )

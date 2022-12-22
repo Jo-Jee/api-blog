@@ -1,6 +1,6 @@
 package kr.co.jojee.blog.api.entity
 
-import kr.co.jojee.blog.api.dto.UserResponseDto
+import kr.co.jojee.blog.api.dto.UserResponse
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.Column
@@ -18,8 +18,8 @@ class User(
     val email: String,
     val encodedPassword: String
 ): Timestamped(), UserDetails {
-    fun toDto(): UserResponseDto {
-        return UserResponseDto(
+    fun toDto(): UserResponse {
+        return UserResponse(
             id = id,
             email = email
         )

@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
-class LoginRequestDto(
+data class RegisterRequest(
     @field:Schema(
         example = "example@example.com"
     )

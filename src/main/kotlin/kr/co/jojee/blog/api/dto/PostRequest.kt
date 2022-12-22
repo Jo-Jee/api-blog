@@ -1,6 +1,6 @@
 package kr.co.jojee.blog.api.dto
 
-data class PostRequestDto(
+data class PostRequest(
     val id: Long?,
     val title: String,
     val summary: String,

@@ -1,10 +1,10 @@
 package kr.co.jojee.blog.api.controller
 
 import io.swagger.v3.oas.annotations.tags.Tag
-import kr.co.jojee.blog.api.dto.TopicRequestDto
-import kr.co.jojee.blog.api.dto.PostRequestDto
-import kr.co.jojee.blog.api.dto.PostResponseDto
-import kr.co.jojee.blog.api.dto.TopicResponseDto
+import kr.co.jojee.blog.api.dto.TopicRequest
+import kr.co.jojee.blog.api.dto.PostRequest
+import kr.co.jojee.blog.api.dto.PostResponse
+import kr.co.jojee.blog.api.dto.TopicResponse
 import kr.co.jojee.blog.api.service.BlogService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -25,18 +25,18 @@ class BlogController(
     val blogService: BlogService
 ) {
     @GetMapping("/posts")
-    fun getAllPosts(@RequestParam page: Int, @RequestParam size: Int): Page<PostResponseDto> {
+    fun getAllPosts(@RequestParam page: Int, @RequestParam size: Int): Page<PostResponse> {
         val pageRequest = PageRequest.of(page, size)
         return blogService.findAllPosts(pageRequest).map { it.toDto() }
     }
 
     @PostMapping("/posts")
-    fun addPost(@RequestBody newPost: PostRequestDto): PostResponseDto {
+    fun addPost(@RequestBody newPost: PostRequest): PostResponse {
         return blogService.addPost(newPost.title, newPost.summary, newPost.topicId, newPost.published, newPost.tags).toDto()
     }
 
     @PostMapping("/topics")
-    fun addTopic(@RequestBody newTopic: TopicRequestDto): TopicResponseDto {
+    fun addTopic(@RequestBody newTopic: TopicRequest): TopicResponse {
         return blogService.addTopic(newTopic.name).toDto()
     }
 }
