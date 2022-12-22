@@ -59,6 +59,9 @@ class BlogService(
 //        return userRepository.findByEmail(email) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 email입니다.")
 //    }
 
+    fun findAllTopics(): List<Topic> {
+        return topicRepository.findAll()
+    }
     fun findTopicById(id: Long): Topic {
         return topicRepository.findById(id).orElseThrow{throw ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 email입니다.")}
     }

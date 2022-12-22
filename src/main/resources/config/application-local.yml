@@ -5,7 +5,10 @@ springdoc:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:local;NON_KEYWORDS=USER
+    url: jdbc:h2:file:/Users/george/Data;NON_KEYWORDS=USER
   h2:
     console:
       enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
