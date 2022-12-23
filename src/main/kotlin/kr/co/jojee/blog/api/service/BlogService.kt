@@ -73,4 +73,8 @@ class BlogService(
     fun findTagByName(name: String): Tag? {
         return tagRepository.findByName(name)
     }
+
+    fun findAllTags(): List<Tag> {
+        return tagRepository.findAll()
+    }
 }

@@ -1,5 +1,7 @@
 package kr.co.jojee.blog.api.entity
 
+import kr.co.jojee.blog.api.dto.TagResponse
+import org.hibernate.annotations.Formula
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -17,6 +19,15 @@ class Tag(
     @Column(unique = true, nullable = false)
     val name: String,
     @OneToMany(mappedBy = "tag")
-    var posts: MutableSet<PostTag> = HashSet()
+    var posts: MutableSet<PostTag> = HashSet(),
+    @Formula("(SELECT COUNT(*) FROM post_tag pt WHERE pt.tag_id = id)")
+    var count: Int = 0
 ) {
+    fun toDto(): TagResponse {
+        return TagResponse(
+            id = id,
+            name = name,
+            count = count
+        )
+    }
 }

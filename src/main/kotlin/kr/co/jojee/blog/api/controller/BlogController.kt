@@ -1,10 +1,7 @@
 package kr.co.jojee.blog.api.controller
 
 import io.swagger.v3.oas.annotations.tags.Tag
-import kr.co.jojee.blog.api.dto.TopicRequest
-import kr.co.jojee.blog.api.dto.PostRequest
-import kr.co.jojee.blog.api.dto.PostResponse
-import kr.co.jojee.blog.api.dto.TopicResponse
+import kr.co.jojee.blog.api.dto.*
 import kr.co.jojee.blog.api.service.BlogService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -42,5 +39,10 @@ class BlogController(
     @PostMapping("/topics")
     fun addTopic(@RequestBody newTopic: TopicRequest): TopicResponse {
         return blogService.addTopic(newTopic.name).toDto()
+    }
+
+    @GetMapping("/tags")
+    fun getAllTags(): List<TagResponse> {
+        return blogService.findAllTags().map { it.toDto() }
     }
 }
