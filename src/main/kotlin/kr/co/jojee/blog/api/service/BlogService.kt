@@ -1,5 +1,6 @@
 package kr.co.jojee.blog.api.service
 
+import kr.co.jojee.blog.api.dto.PostRequest
 import kr.co.jojee.blog.api.entity.*
 import kr.co.jojee.blog.api.repository.PostRepository
 import kr.co.jojee.blog.api.repository.TagRepository
@@ -27,15 +28,16 @@ class BlogService(
 //    }
 //
     @Transactional
-    fun addPost(title: String, summary: String, topicId: Long, published: Boolean, tags: List<String>): Post {
+    fun addPost(postRequest: PostRequest): Post {
         val post = Post(
-            title = title,
-            summary = summary,
-            topic = findTopicById(topicId),
-            published = published,
+            title = postRequest.title,
+            summary = postRequest.summary,
+            topic = findTopicById(postRequest.topicId),
+            published = postRequest.published,
+            body = postRequest.body
         )
 
-        for (tagName in tags) {
+        for (tagName in postRequest.tags) {
             val tag = findTagByName(tagName) ?: Tag(name = tagName)
             val postTag = PostTag(post = post, tag = tag)
 

@@ -21,16 +21,24 @@ class Post(
     var summary: String,
     @ManyToOne
     var topic: Topic,
-    @Column()
     var published: Boolean = false,
     @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL])
-    val tags: MutableSet<PostTag> = HashSet()
+    var tags: MutableSet<PostTag> = HashSet(),
+    @Column(columnDefinition = "TEXT")
+    var body: String
 
 ): Timestamped() {
     fun toDto(): PostResponse {
         return PostResponse(
             id = id,
-            title = title
+            title = title,
+            tags = tags.map { it.tag.name },
+            summary = summary,
+            topicId = topic.id!!,
+            published = published,
+            body = body,
+            createdAt = createdAt.toString(),
+            updatedAt = updatedAt.toString()
         )
     }
 }

@@ -28,8 +28,8 @@ class BlogController(
     }
 
     @PostMapping("/posts")
-    fun addPost(@RequestBody newPost: PostRequest): PostResponse {
-        return blogService.addPost(newPost.title, newPost.summary, newPost.topicId, newPost.published, newPost.tags).toDto()
+    fun addPost(@RequestBody postRequest: PostRequest): PostResponse {
+        return blogService.addPost(postRequest).toDto()
     }
     @GetMapping("/topics")
     fun getAllTopics(): List<TopicResponse> {
