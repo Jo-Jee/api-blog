@@ -16,10 +16,13 @@ class Tag(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
+
     @Column(unique = true, nullable = false)
     val name: String,
+
     @OneToMany(mappedBy = "tag")
     var posts: MutableSet<PostTag> = HashSet(),
+
     @Formula("(SELECT COUNT(*) FROM post_tag pt WHERE pt.tag_id = id)")
     var count: Int = 0
 ) {

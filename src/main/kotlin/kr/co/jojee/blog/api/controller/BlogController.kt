@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -32,6 +34,12 @@ class BlogController(
     fun addPost(@RequestBody postRequest: PostRequest): PostResponse {
         return blogService.addPost(postRequest).toDto()
     }
+
+    @PutMapping("/posts/{id}")
+    fun updatePost(@PathVariable id: Long, @RequestBody postRequest: PostRequest): PostResponse {
+        return blogService.updatePost(id, postRequest).toDto()
+    }
+
     @GetMapping("/topics")
     fun getAllTopics(): List<TopicResponse> {
         return blogService.findAllTopics().map { it.toDto() }

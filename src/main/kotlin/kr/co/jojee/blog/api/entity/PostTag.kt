@@ -12,9 +12,11 @@ class PostTag(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     val post: Post,
+
     @ManyToOne
     @JoinColumn(name = "tag_id")
     val tag: Tag

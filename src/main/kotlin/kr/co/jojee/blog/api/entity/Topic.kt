@@ -12,6 +12,7 @@ class Topic(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
+
     @Column(nullable = false, unique = true)
     val name: String
 ) {
