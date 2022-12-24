@@ -5,6 +5,7 @@ import kr.co.jojee.blog.api.dto.*
 import kr.co.jojee.blog.api.service.BlogService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -23,7 +24,7 @@ class BlogController(
 ) {
     @GetMapping("/posts")
     fun getAllPosts(@RequestParam page: Int, @RequestParam size: Int): Page<PostResponse> {
-        val pageRequest = PageRequest.of(page, size)
+        val pageRequest = PageRequest.of(page, size, Sort.by("id").descending())
         return blogService.findAllPosts(pageRequest).map { it.toDto() }
     }
 

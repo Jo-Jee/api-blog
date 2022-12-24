@@ -9,6 +9,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
+import javax.persistence.OrderBy
 
 @Entity
 class Post(
@@ -23,6 +24,7 @@ class Post(
     var topic: Topic,
     var published: Boolean = false,
     @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL])
+    @OrderBy("id")
     var tags: MutableSet<PostTag> = HashSet(),
     @Column(columnDefinition = "TEXT")
     var body: String
