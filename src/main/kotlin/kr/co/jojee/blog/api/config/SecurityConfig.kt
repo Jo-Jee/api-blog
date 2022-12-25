@@ -21,8 +21,15 @@ class SecurityConfig(
 
         http.authorizeRequests()
             .antMatchers(
-                HttpMethod.GET,
-                "/api/v1/users/**"
+                "/api/v1/users/**",
+            ).authenticated()
+            .antMatchers(
+                HttpMethod.POST,
+                "/api/v1/blog/**"
+            ).authenticated()
+            .antMatchers(
+                HttpMethod.PUT,
+                "/api/v1/blog/**"
             ).authenticated()
             .anyRequest().permitAll()
             .and()

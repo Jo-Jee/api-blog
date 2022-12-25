@@ -1,5 +1,6 @@
 package kr.co.jojee.blog.api.controller
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import kr.co.jojee.blog.api.dto.*
 import kr.co.jojee.blog.api.service.BlogService
@@ -30,11 +31,13 @@ class BlogController(
         return blogService.findAllPosts(pageRequest).map { it.toDto() }
     }
 
+    @SecurityRequirement(name="bearerAuth")
     @PostMapping("/posts")
     fun addPost(@RequestBody postRequest: PostRequest): PostResponse {
         return blogService.addPost(postRequest).toDto()
     }
 
+    @SecurityRequirement(name="bearerAuth")
     @PutMapping("/posts/{id}")
     fun updatePost(@PathVariable id: Long, @RequestBody postRequest: PostRequest): PostResponse {
         return blogService.updatePost(id, postRequest).toDto()
@@ -45,6 +48,7 @@ class BlogController(
         return blogService.findAllTopics().map { it.toDto() }
     }
 
+    @SecurityRequirement(name="bearerAuth")
     @PostMapping("/topics")
     fun addTopic(@RequestBody newTopic: TopicRequest): TopicResponse {
         return blogService.addTopic(newTopic.name).toDto()
