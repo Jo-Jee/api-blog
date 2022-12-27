@@ -1,11 +1,8 @@
 package kr.co.jojee.blog.api.controller
 
-import kr.co.jojee.blog.api.dto.RegisterRequest
-import kr.co.jojee.blog.api.dto.LoginRequest
-import kr.co.jojee.blog.api.dto.LoginResponse
-import kr.co.jojee.blog.api.dto.UserResponse
 import kr.co.jojee.blog.api.service.AuthService
 import io.swagger.v3.oas.annotations.tags.Tag
+import kr.co.jojee.blog.api.dto.*
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -22,7 +19,7 @@ class AuthController(
     val authService: AuthService
 ) {
     @PostMapping("/login")
-    fun loginWithIdPassword(@RequestBody loginRequest: LoginRequest): LoginResponse {
+    fun loginWithIdPassword(@RequestBody loginRequest: LoginRequest): TokenResponse {
         return authService.login(loginRequest)
     }
 
@@ -31,5 +28,10 @@ class AuthController(
         @Valid @RequestBody newUser: RegisterRequest
     ): UserResponse {
         return authService.register(newUser).toDto()
+    }
+
+    @PostMapping("/token/refresh")
+    fun refreshToken(@RequestBody refreshTokenRequest: RefreshTokenRequest): TokenResponse {
+        return authService.refresh(refreshTokenRequest)
     }
 }

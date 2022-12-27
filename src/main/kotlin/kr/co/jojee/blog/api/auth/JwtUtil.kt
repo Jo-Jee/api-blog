@@ -1,9 +1,10 @@
 package kr.co.jojee.blog.api.auth
 
-import kr.co.jojee.blog.api.dto.LoginResponse
+import kr.co.jojee.blog.api.dto.TokenResponse
 import kr.co.jojee.blog.api.entity.User
 import kr.co.jojee.blog.api.service.UserService
 import io.jsonwebtoken.Claims
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -22,35 +23,62 @@ class JwtUtil(
     @Value("\${jwt.secret}")
     val secretString: String
 ) {
-    val expTime: Long = 1000L * 60 * 60 * 24
+    val accessTokenExpTime: Long = 1000L * 60 * 10
+    val refreshTokenExpTime: Long = 1000L * 60 * 60 * 24 * 10
     val secretKey: Key = Keys.hmacShaKeyFor(secretString.toByteArray())
     val signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm.HS256
 
-    fun createToken(user: User): LoginResponse {
-        val claims: Claims = Jwts.claims()
-        claims["uid"] = user.id
+    fun createToken(user: User): TokenResponse {
+        val accessTokenClaims = Jwts.claims()
+        val refreshTokenClaims = Jwts.claims()
+
+        accessTokenClaims["type"] = "access"
+        accessTokenClaims["uid"] = user.id
+
+        refreshTokenClaims["type"] = "refresh"
+        refreshTokenClaims["uid"] = user.id
 
         val accessToken = Jwts.builder()
-            .setClaims(claims)
-            .setExpiration(Date(System.currentTimeMillis() + expTime))
+            .setClaims(accessTokenClaims)
+            .setExpiration(Date(System.currentTimeMillis() + accessTokenExpTime))
             .signWith(secretKey, signatureAlgorithm)
             .compact()
 
         val refreshToken = Jwts.builder()
-            .setExpiration(Date(System.currentTimeMillis() + expTime))
+            .setClaims(refreshTokenClaims)
+            .setExpiration(Date(System.currentTimeMillis() + refreshTokenExpTime))
             .signWith(secretKey, signatureAlgorithm)
             .compact()
 
-        return LoginResponse(
+        return TokenResponse(
             accessToken = accessToken,
             refreshToken = refreshToken
         )
     }
 
     fun validate(token: String): Boolean {
-        val claims: Claims = getClaims(token)
-        val exp: Date = claims.expiration
-        return exp.after(Date())
+        try {
+            getClaims(token)
+        } catch (jwtException: JwtException) {
+            return false
+        }
+        return true
+    }
+
+    fun validateRefreshToken(token: String): Long {
+        try {
+            val claims = getClaims(token)
+            val uid = getClaims(token)["uid"]
+
+            if (claims["type"] != "refresh")
+                throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "리프레시 토큰이 아닙니다.")
+
+            return if (uid is Number)
+                uid.toLong()
+            else throw ResponseStatusException(HttpStatus.BAD_REQUEST)
+        } catch (jwtException: JwtException) {
+            throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "토큰 인증에 실패했습니다.")
+        }
     }
 
     fun parseUid(token: String): Long {
