@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -17,10 +18,12 @@ import java.util.*
 
 @Component
 class JwtUtil(
-    val userService: UserService
+    val userService: UserService,
+    @Value("\${jwt.secret}")
+    val secretString: String
 ) {
     val expTime: Long = 1000L * 60 * 60 * 24
-    val secretKey: Key = Keys.hmacShaKeyFor("CNFjvDbu42BaFPmpDgjw7yFzg0yqms8l".toByteArray())
+    val secretKey: Key = Keys.hmacShaKeyFor(secretString.toByteArray())
     val signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm.HS256
 
     fun createToken(user: User): LoginResponse {
@@ -34,7 +37,6 @@ class JwtUtil(
             .compact()
 
         val refreshToken = Jwts.builder()
-            .setClaims(claims)
             .setExpiration(Date(System.currentTimeMillis() + expTime))
             .signWith(secretKey, signatureAlgorithm)
             .compact()
