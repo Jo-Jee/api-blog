@@ -21,6 +21,7 @@ class SecurityConfig(
         http.headers().frameOptions().disable()
 
         http.authorizeRequests()
+            .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
             .antMatchers(
                 "/api/v1/users/**",
             ).authenticated()

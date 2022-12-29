@@ -1,5 +1,5 @@
 package kr.co.jojee.blog.api.dto
 
-data class RefreshTokenRequest(
+data class ReissueTokenRequest(
     val refreshToken: String
 )

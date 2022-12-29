@@ -30,8 +30,8 @@ class AuthController(
         return authService.register(newUser).toDto()
     }
 
-    @PostMapping("/token/refresh")
-    fun refreshToken(@RequestBody refreshTokenRequest: RefreshTokenRequest): TokenResponse {
-        return authService.refresh(refreshTokenRequest)
+    @PostMapping("/reissue")
+    fun refreshToken(@RequestBody reissueTokenRequest: ReissueTokenRequest): TokenResponse {
+        return authService.reissue(reissueTokenRequest)
     }
 }
