@@ -23,7 +23,7 @@ class JwtUtil(
     @Value("\${jwt.secret}")
     val secretString: String
 ) {
-    val accessTokenExpTime: Long = 1000L * 60 * 10
+    val accessTokenExpTime: Long = 1000L * 60 * 60
     val refreshTokenExpTime: Long = 1000L * 60 * 60 * 24 * 10
     val secretKey: Key = Keys.hmacShaKeyFor(secretString.toByteArray())
     val signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm.HS256
