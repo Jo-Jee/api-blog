@@ -6,12 +6,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import kr.co.jojee.blog.api.entity.User
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.security.core.Authentication
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(
     name = "User",
@@ -29,8 +28,9 @@ class UserController (
     }
 
     @GetMapping("/")
-    fun getAllUsers(pageable: Pageable): Page<UserResponse> {
-        return userService.findAll(pageable).map { it.toDto()  }
+    fun getAllUsers(@RequestParam page: Int, @RequestParam size: Int): Page<UserResponse> {
+        val pageRequest = PageRequest.of(page, size, Sort.by("id").descending())
+        return userService.findAll(pageRequest).map { it.toDto() }
     }
 
     @GetMapping("/my-profile")
