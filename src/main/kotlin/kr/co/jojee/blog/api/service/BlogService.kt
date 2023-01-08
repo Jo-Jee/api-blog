@@ -8,11 +8,10 @@ import kr.co.jojee.blog.api.repository.TagRepository
 import kr.co.jojee.blog.api.repository.TopicRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-import java.util.*
-import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Service
@@ -62,7 +61,7 @@ class BlogService(
     }
 
     fun findAllTopics(): List<Topic> {
-        return topicRepository.findAll()
+        return topicRepository.findAll(Sort.by(Sort.Direction.ASC, "id"))
     }
 
     fun findTopicById(id: Long): Topic {
