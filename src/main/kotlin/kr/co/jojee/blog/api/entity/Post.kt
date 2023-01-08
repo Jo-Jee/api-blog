@@ -1,5 +1,6 @@
 package kr.co.jojee.blog.api.entity
 
+import kr.co.jojee.blog.api.dto.PostListResponse
 import kr.co.jojee.blog.api.dto.PostResponse
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -47,6 +48,16 @@ class Post(
             body = body,
             createdAt = createdAt.toString(),
             updatedAt = updatedAt.toString()
+        )
+    }
+
+    fun toListDto(): PostListResponse {
+        return PostListResponse(
+            id = id,
+            title = title,
+            tags = tags.map {it.tag.name},
+            summary = summary,
+            createdAt = createdAt.toString()
         )
     }
 }

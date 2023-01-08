@@ -26,9 +26,9 @@ class BlogController(
     val blogService: BlogService
 ) {
     @GetMapping("/posts")
-    fun getAllPosts(@RequestParam page: Int, @RequestParam size: Int): Page<PostResponse> {
+    fun getAllPosts(@RequestParam page: Int, @RequestParam size: Int): Page<PostListResponse> {
         val pageRequest = PageRequest.of(page, size, Sort.by("id").descending())
-        return blogService.findAllPosts(pageRequest).map { it.toDto() }
+        return blogService.findAllPosts(pageRequest).map { it.toListDto() }
     }
 
     @SecurityRequirement(name="bearerAuth")
