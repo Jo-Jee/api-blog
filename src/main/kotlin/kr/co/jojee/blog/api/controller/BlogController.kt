@@ -26,7 +26,11 @@ class BlogController(
     val blogService: BlogService
 ) {
     @GetMapping("/posts")
-    fun getAllPosts(@RequestParam(defaultValue = "0", required = false) page: Int, @RequestParam(defaultValue = "10", required = false) size: Int): Page<PostListResponse> {
+    fun getAllPosts(
+        @RequestParam(defaultValue = "0", required = false) page: Int,
+        @RequestParam(defaultValue = "10", required = false) size: Int,
+        @RequestParam(required = false) tag: String?
+    ): Page<PostListResponse> {
         val pageRequest = PageRequest.of(page, size, Sort.by("id").descending())
         return blogService.findAllPosts(pageRequest).map { it.toListDto() }
     }
