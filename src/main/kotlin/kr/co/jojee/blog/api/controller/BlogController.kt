@@ -58,6 +58,12 @@ class BlogController(
         return blogService.addTopic(newTopic.name).toDto()
     }
 
+    @SecurityRequirement(name="bearerAuth")
+    @PutMapping("/topics/{id}")
+    fun updateTopic(@PathVariable id: Long, @RequestBody topicRequest: TopicRequest): TopicResponse {
+        return blogService.updateTopic(id, topicRequest).toDto()
+    }
+
     @GetMapping("/tags")
     fun getAllTags(): List<TagResponse> {
         return blogService.findAllTags().map { it.toDto() }

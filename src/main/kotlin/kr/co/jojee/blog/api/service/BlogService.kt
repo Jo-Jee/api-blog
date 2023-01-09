@@ -1,6 +1,7 @@
 package kr.co.jojee.blog.api.service
 
 import kr.co.jojee.blog.api.dto.PostRequest
+import kr.co.jojee.blog.api.dto.TopicRequest
 import kr.co.jojee.blog.api.entity.*
 import kr.co.jojee.blog.api.repository.PostRepository
 import kr.co.jojee.blog.api.repository.PostTagRepository
@@ -57,6 +58,14 @@ class BlogService(
         val topic = Topic(
             name = name
         )
+        return topicRepository.save(topic)
+    }
+
+    fun updateTopic(id: Long, topicRequest: TopicRequest): Topic {
+        val topic = findTopicById(id)
+
+        topic.name = topicRequest.name
+
         return topicRepository.save(topic)
     }
 
