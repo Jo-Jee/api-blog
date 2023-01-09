@@ -3,6 +3,7 @@ package kr.co.jojee.blog.api.controller
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import kr.co.jojee.blog.api.dto.*
+import kr.co.jojee.blog.api.entity.Post
 import kr.co.jojee.blog.api.service.BlogService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -30,11 +31,21 @@ class BlogController(
         @RequestParam(defaultValue = "0", required = false) page: Int,
         @RequestParam(defaultValue = "10", required = false) size: Int,
         @RequestParam(required = false) tag: String?
-    ): Page<PostListResponse> {
+    ): Page<PostListResponse>{
         val pageRequest = PageRequest.of(page, size, Sort.by("id").descending())
         return blogService.findAllPosts(pageRequest).map { it.toListDto() }
     }
 
+    @GetMapping("/posts/ids")
+    fun getAllPostIds(): List<Long> {
+        return blogService.getAllPostIds()
+    }
+    @GetMapping("/posts/{id}")
+    fun getPostbyId(
+        @PathVariable id: Long
+    ): PostResponse {
+        return blogService.findPostById(id).toDto()
+    }
     @SecurityRequirement(name="bearerAuth")
     @PostMapping("/posts")
     fun addPost(@RequestBody postRequest: PostRequest): PostResponse {

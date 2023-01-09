@@ -105,4 +105,8 @@ class BlogService(
 
             tagRepository.save(tag)
         }}
+
+    fun getAllPostIds(): List<Long> {
+        return postRepository.findAllId()
+    }
 }
