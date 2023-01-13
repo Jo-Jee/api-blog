@@ -33,6 +33,9 @@ class BlogController(
         @RequestParam(required = false) tag: String?
     ): Page<PostListResponse>{
         val pageRequest = PageRequest.of(page, size, Sort.by("id").descending())
+
+        if (tag != null)
+            return blogService.findPostsByTag(tag, pageRequest).map { it.toListDto() }
         return blogService.findAllPosts(pageRequest).map { it.toListDto() }
     }
 

@@ -109,4 +109,8 @@ class BlogService(
     fun getAllPostIds(): List<Long> {
         return postRepository.findAllId()
     }
+
+    fun findPostsByTag(tag: String, pageable: Pageable): Page<Post> {
+        return postRepository.findPostsByTag(tag, pageable)
+    }
 }
