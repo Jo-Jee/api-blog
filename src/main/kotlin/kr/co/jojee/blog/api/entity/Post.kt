@@ -57,6 +57,7 @@ class Post(
             title = title,
             tags = tags.map {it.tag.name},
             summary = summary,
+            published = published,
             createdAt = createdAt.toString()
         )
     }

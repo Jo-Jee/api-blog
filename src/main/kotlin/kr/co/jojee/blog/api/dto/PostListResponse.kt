@@ -5,5 +5,6 @@ data class PostListResponse(
     val title: String,
     val summary: String,
     val tags: List<String>,
+    val published: Boolean,
     val createdAt: String
 )
