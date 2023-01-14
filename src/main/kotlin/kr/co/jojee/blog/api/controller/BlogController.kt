@@ -82,4 +82,9 @@ class BlogController(
     fun getAllTags(): List<TagResponse> {
         return blogService.findAllTags().map { it.toDto() }
     }
+
+    @GetMapping("/tags/names")
+    fun getAllTagNames(): List<String> {
+        return blogService.getAllTagNames()
+    }
 }

@@ -113,4 +113,8 @@ class BlogService(
     fun findPostsByTag(tag: String, pageable: Pageable): Page<Post> {
         return postRepository.findPostsByTag(tag, pageable)
     }
+
+    fun getAllTagNames(): List<String> {
+        return tagRepository.getAllTagNames()
+    }
 }
