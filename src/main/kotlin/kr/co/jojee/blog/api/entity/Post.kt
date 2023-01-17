@@ -58,7 +58,8 @@ class Post(
             tags = tags.map {it.tag.name},
             summary = summary,
             published = published,
-            createdAt = createdAt.toString()
+            createdAt = createdAt.toString(),
+            updatedAt = updatedAt.toString()
         )
     }
 }
