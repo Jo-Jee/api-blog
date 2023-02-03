@@ -16,6 +16,6 @@ abstract class Timestamped {
     var createdAt: LocalDateTime? = null
 
     @LastModifiedDate
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     var updatedAt: LocalDateTime? = null
 }
