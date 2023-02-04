@@ -9,5 +9,6 @@ data class PostResponse(
     val published: Boolean,
     val body: String,
     val createdAt: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val publishedAt: String
 )

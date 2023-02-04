@@ -2,6 +2,7 @@ package kr.co.jojee.blog.api.entity
 
 import kr.co.jojee.blog.api.dto.PostListResponse
 import kr.co.jojee.blog.api.dto.PostResponse
+import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -34,7 +35,10 @@ class Post(
     var tags: MutableSet<PostTag> = HashSet(),
 
     @Column(columnDefinition = "TEXT")
-    var body: String
+    var body: String,
+
+    @Column(nullable = false)
+    var publishedAt: LocalDateTime? = null
 
 ): Timestamped() {
     fun toDto(): PostResponse {
@@ -47,7 +51,8 @@ class Post(
             published = published,
             body = body,
             createdAt = createdAt.toString(),
-            updatedAt = updatedAt.toString()
+            updatedAt = updatedAt.toString(),
+            publishedAt = publishedAt.toString()
         )
     }
 
@@ -59,7 +64,8 @@ class Post(
             summary = summary,
             published = published,
             createdAt = createdAt.toString(),
-            updatedAt = updatedAt.toString()
+            updatedAt = updatedAt.toString(),
+            publishedAt = publishedAt.toString()
         )
     }
 }
