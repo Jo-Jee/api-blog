@@ -6,5 +6,6 @@ data class PostRequest(
     val topicId: Long,
     val published: Boolean,
     val tags: List<String>,
+    val publishedAt: String,
     val body: String
 )

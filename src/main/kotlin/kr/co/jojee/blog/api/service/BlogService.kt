@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.transaction.Transactional
 
 @Service
@@ -29,6 +31,7 @@ class BlogService(
             summary = postRequest.summary,
             topic = findTopicById(postRequest.topicId),
             published = postRequest.published,
+            publishedAt = LocalDateTime.parse(postRequest.publishedAt),
             body = postRequest.body
         )
 
@@ -45,6 +48,7 @@ class BlogService(
         post.summary = postRequest.summary
         post.topic = findTopicById((postRequest.topicId))
         post.published = postRequest.published
+        post.publishedAt = LocalDateTime.parse(postRequest.publishedAt)
         post.body = postRequest.body
 
         postTagRepository.deleteAllByPost(post)
