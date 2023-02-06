@@ -1,7 +1,6 @@
 package kr.co.jojee.blog.api.config
 
 import kr.co.jojee.blog.api.auth.JwtFilter
-import kr.co.jojee.blog.api.service.UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -26,12 +25,7 @@ class SecurityConfig(
                 "/api/v1/users/**",
             ).authenticated()
             .antMatchers(
-                HttpMethod.POST,
-                "/api/v1/blog/**"
-            ).authenticated()
-            .antMatchers(
-                HttpMethod.PUT,
-                "/api/v1/blog/**"
+                "/api/v1/admin/**"
             ).authenticated()
             .anyRequest().permitAll()
             .and()
