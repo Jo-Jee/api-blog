@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 interface PostRepository: JpaRepository<Post, Long?> {
@@ -14,4 +15,5 @@ interface PostRepository: JpaRepository<Post, Long?> {
     fun findAllId(): List<Long>
     @Query("SELECT p FROM Post p INNER JOIN p.tags pt INNER JOIN pt.tag t WHERE t.name = :tag")
     fun findPostsByTag(@Param("tag") tag: String, pageable: Pageable): Page<Post>
+    fun findByPublishedTrueAndPublishedAtLessThanEqual(now: LocalDateTime, pageable: Pageable): Page<Post>
 }

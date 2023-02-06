@@ -85,6 +85,11 @@ class BlogService(
         return postRepository.findAll(pageable)
     }
 
+    fun findPublishedPosts(pageable: Pageable): Page<Post> {
+        val now = LocalDateTime.now()
+        return postRepository.findByPublishedTrueAndPublishedAtLessThanEqual(now, pageable)
+    }
+
     fun findTagByName(name: String): Tag? {
         return tagRepository.findByName(name)
     }

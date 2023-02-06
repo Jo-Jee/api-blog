@@ -6,9 +6,9 @@ data class PostResponse(
     val summary: String,
     val topicId: Long,
     val tags: List<String>,
-    val published: Boolean,
+    val published: Boolean?,
     val body: String,
-    val createdAt: String,
-    val updatedAt: String,
+    val createdAt: String?,
+    val updatedAt: String?,
     val publishedAt: String
 )
