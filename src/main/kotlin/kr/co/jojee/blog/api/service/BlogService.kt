@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.transaction.Transactional
 
 @Service
@@ -86,8 +85,7 @@ class BlogService(
     }
 
     fun findPublishedPosts(pageable: Pageable): Page<Post> {
-        val now = LocalDateTime.now()
-        return postRepository.findByPublishedTrueAndPublishedAtLessThanEqual(now, pageable)
+        return postRepository.findByPublishedTrueAndPublishedAtLessThanEqual(LocalDateTime.now(), pageable)
     }
 
     fun findTagByName(name: String): Tag? {
@@ -119,8 +117,8 @@ class BlogService(
         return postRepository.findAllId()
     }
 
-    fun findPostsByTag(tag: String, pageable: Pageable): Page<Post> {
-        return postRepository.findPostsByTag(tag, pageable)
+    fun findPublishedPostsByTag(tag: String, pageable: Pageable): Page<Post> {
+        return postRepository.findPublishedPostsByTag(tag, LocalDateTime.now(), pageable)
     }
 
     fun getAllTagNames(): List<String> {

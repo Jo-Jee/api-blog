@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 interface PostRepository: JpaRepository<Post, Long?> {
     @Query("SELECT p.id FROM Post p")
     fun findAllId(): List<Long>
-    @Query("SELECT p FROM Post p INNER JOIN p.tags pt INNER JOIN pt.tag t WHERE t.name = :tag")
-    fun findPostsByTag(@Param("tag") tag: String, pageable: Pageable): Page<Post>
+    @Query("SELECT p FROM Post p INNER JOIN p.tags pt INNER JOIN pt.tag t WHERE t.name = :tag AND p.published = TRUE AND p.publishedAt <= :now")
+    fun findPublishedPostsByTag(@Param("tag") tag: String, @Param("now") now: LocalDateTime, pageable: Pageable): Page<Post>
     fun findByPublishedTrueAndPublishedAtLessThanEqual(now: LocalDateTime, pageable: Pageable): Page<Post>
 }

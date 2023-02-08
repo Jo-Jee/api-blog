@@ -30,7 +30,7 @@ class BlogController(
         val pageRequest = PageRequest.of(page, size, Sort.by("id").descending())
 
         if (tag != null)
-            return blogService.findPostsByTag(tag, pageRequest).map { it.toListDto() }
+            return blogService.findPublishedPostsByTag(tag, pageRequest).map { it.toListDto() }
         return blogService.findPublishedPosts(pageRequest).map { it.toListDto() }
     }
 
