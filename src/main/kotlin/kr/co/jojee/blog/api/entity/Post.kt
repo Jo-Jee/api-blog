@@ -51,8 +51,6 @@ class Post(
             topicId = topic.id!!,
             published = published,
             body = body,
-            createdAt = createdAt.toString(),
-            updatedAt = updatedAt.toString(),
             publishedAt = publishedAt.toString()
         )
     }

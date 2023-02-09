@@ -8,7 +8,5 @@ data class PostResponse(
     val tags: List<String>,
     val published: Boolean?,
     val body: String,
-    val createdAt: String?,
-    val updatedAt: String?,
     val publishedAt: String
 )
