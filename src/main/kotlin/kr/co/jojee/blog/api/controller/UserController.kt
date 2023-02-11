@@ -33,7 +33,7 @@ class UserController (
         return userService.findAll(pageRequest).map { it.toDto() }
     }
 
-    @GetMapping("/my-profile")
+    @GetMapping("/me")
     fun getMyProfile(authentication: Authentication): UserResponse {
         val user: User = authentication.principal as User
 
