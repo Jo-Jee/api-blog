@@ -1,5 +1,6 @@
 package kr.co.jojee.blog.api.entity
 
+import kr.co.jojee.blog.api.dto.AdminPostListResponse
 import kr.co.jojee.blog.api.dto.PostListResponse
 import kr.co.jojee.blog.api.dto.PostResponse
 import java.time.LocalDateTime
@@ -57,6 +58,16 @@ class Post(
 
     fun toListDto(): PostListResponse {
         return PostListResponse(
+            id = id,
+            title = title,
+            tags = tags.map {it.tag.name},
+            summary = summary,
+            publishedAt = publishedAt.toString()
+        )
+    }
+
+    fun toAdminListDto(): AdminPostListResponse {
+        return AdminPostListResponse(
             id = id,
             title = title,
             tags = tags.map {it.tag.name},
