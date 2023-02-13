@@ -13,9 +13,18 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
+import javax.persistence.OneToOne
 import javax.persistence.OrderBy
+import javax.persistence.PrimaryKeyJoinColumn
+import javax.persistence.SecondaryTable
+import javax.persistence.Table
 
 @Entity
+@Table(name = "post")
+@SecondaryTable(
+    name = "view_count",
+    pkJoinColumns = [PrimaryKeyJoinColumn(name = "post_id")]
+)
 class Post(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +49,10 @@ class Post(
     var body: String,
 
     @Column(nullable = false)
-    var publishedAt: LocalDateTime? = null
+    var publishedAt: LocalDateTime? = null,
 
+    @Column(table = "view_count")
+    var viewCount: Long = 0
 ): Timestamped() {
     fun toDto(): PostResponse {
         return PostResponse(
@@ -52,7 +63,8 @@ class Post(
             topicId = topic.id!!,
             published = published,
             body = body,
-            publishedAt = publishedAt.toString()
+            publishedAt = publishedAt.toString(),
+            viewCount = viewCount
         )
     }
 
@@ -62,7 +74,8 @@ class Post(
             title = title,
             tags = tags.map {it.tag.name},
             summary = summary,
-            publishedAt = publishedAt.toString()
+            publishedAt = publishedAt.toString(),
+            viewCount = viewCount
         )
     }
 

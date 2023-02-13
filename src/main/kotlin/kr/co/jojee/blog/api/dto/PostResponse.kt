@@ -8,5 +8,6 @@ data class PostResponse(
     val tags: List<String>,
     val published: Boolean?,
     val body: String,
-    val publishedAt: String
+    val publishedAt: String,
+    val viewCount: Long
 )
