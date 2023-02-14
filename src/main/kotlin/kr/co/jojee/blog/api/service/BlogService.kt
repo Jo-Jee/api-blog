@@ -100,6 +100,15 @@ class BlogService(
         return postRepository.findById(id).orElseThrow {throw ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 post입니다.")}
     }
 
+    fun increaseViewCount(id: Long): Long {
+        val post = postRepository.findById(id).orElseThrow {throw ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 post입니다.")}
+
+        post.viewCount = post.viewCount + 1
+        postRepository.save(post)
+
+        return post.viewCount
+    }
+
     fun setTags(post: Post, tags: List<String>) {
         post.tags.clear()
 
