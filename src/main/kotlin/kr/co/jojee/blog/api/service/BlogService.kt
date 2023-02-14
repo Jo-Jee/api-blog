@@ -109,6 +109,10 @@ class BlogService(
         return post.viewCount
     }
 
+    fun findViewCountById(id: Long): Long {
+        return postRepository.findViewCountById(id)
+    }
+
     fun setTags(post: Post, tags: List<String>) {
         post.tags.clear()
 

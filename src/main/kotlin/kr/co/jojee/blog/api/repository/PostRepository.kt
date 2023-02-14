@@ -16,4 +16,6 @@ interface PostRepository: JpaRepository<Post, Long?> {
     @Query("SELECT p FROM Post p INNER JOIN p.tags pt INNER JOIN pt.tag t WHERE t.name = :tag AND p.published = TRUE AND p.publishedAt <= :now")
     fun findPublishedPostsByTag(@Param("tag") tag: String, @Param("now") now: LocalDateTime, pageable: Pageable): Page<Post>
     fun findByPublishedTrueAndPublishedAtLessThanEqual(now: LocalDateTime, pageable: Pageable): Page<Post>
+    @Query("SELECT p.viewCount FROM Post p WHERE p.id = :id")
+    fun findViewCountById(@Param("id") id: Long): Long
 }

@@ -53,6 +53,13 @@ class BlogController(
         return blogService.increaseViewCount(id)
     }
 
+    @GetMapping("/posts/{id}/viewcount")
+    fun getViewCount(
+        @PathVariable id: Long
+    ): Long {
+        return blogService.findViewCountById(id)
+    }
+
     @GetMapping("/topics")
     fun getAllTopics(): List<TopicResponse> {
         return blogService.findAllTopics().map { it.toDto() }
