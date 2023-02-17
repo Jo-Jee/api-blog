@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:~/data/blog/test;NON_KEYWORDS=USER
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+jwt:
+  secret: CNFjvDbu42BaFPmpDgjw7yFzg0yqms8l
